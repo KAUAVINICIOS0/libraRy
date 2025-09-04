@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CategoriesRelationManager extends RelationManager
@@ -52,5 +53,9 @@ class CategoriesRelationManager extends RelationManager
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return __('Category of Book');
     }
 }
