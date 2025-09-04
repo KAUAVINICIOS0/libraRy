@@ -8,6 +8,7 @@ use App\Models\Author;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -29,15 +30,27 @@ class AuthorResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name'),
-
-                DatePicker::make('date_birth')
-                    ->native(false)
-                    ->displayFormat('d/m/Y')
-                    ->string(),
-
-                Textarea::make('biography')
-                ->columnSpanFull(),
+                Section::make('Authors')
+                    ->columns(2)
+                    ->description('Content for authors')
+                    ->schema([
+                        TextInput::make('name')
+                            ->label('Name of Author')
+                            ->placeholder('Kaua Vinicios')
+                            ->hint('Name')
+                            ->required(),
+        
+                        DatePicker::make('date_birth')
+                            ->required()
+                            ->displayFormat('d/m/Y')
+                            ->hint('Date of birth'),
+        
+                        Textarea::make('biography')
+                        ->required()
+                        ->hint('Biography of author')
+                        ->placeholder('...')
+                        ->columnSpanFull(),
+                    ])
             ]);
     }
 
