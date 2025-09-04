@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->string('title');
-            $table->integer('isbn');
+            $table->string('isbn');
             $table->string('year_published');
             $table->foreignUlid('author_id')->constrained('authors')->cascadeOnDelete();
             $table->foreignUlid('publisher_id')->constrained('publishers')->cascadeOnDelete();
