@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\Authors\Pages;
+namespace App\Filament\Resources\AuthorResource\Pages;
 
-use App\Filament\Resources\Authors\AuthorResource;
-use Filament\Actions\EditAction;
+use App\Filament\Resources\AuthorResource;
+use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewAuthor extends ViewRecord
@@ -13,7 +13,7 @@ class ViewAuthor extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+            Actions\EditAction::make(),
         ];
     }
 }

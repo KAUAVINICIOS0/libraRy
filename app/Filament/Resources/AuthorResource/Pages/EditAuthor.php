@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\Authors\Pages;
+namespace App\Filament\Resources\AuthorResource\Pages;
 
-use App\Filament\Resources\Authors\AuthorResource;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
+use App\Filament\Resources\AuthorResource;
+use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditAuthor extends EditRecord
@@ -14,8 +13,8 @@ class EditAuthor extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
-            DeleteAction::make(),
+            Actions\ViewAction::make(),
+            Actions\DeleteAction::make(),
         ];
     }
 }

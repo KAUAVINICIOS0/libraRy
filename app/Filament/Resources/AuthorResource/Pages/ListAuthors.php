@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\Authors\Pages;
+namespace App\Filament\Resources\AuthorResource\Pages;
 
-use App\Filament\Resources\Authors\AuthorResource;
-use Filament\Actions\CreateAction;
+use App\Filament\Resources\AuthorResource;
+use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListAuthors extends ListRecords
@@ -13,7 +13,7 @@ class ListAuthors extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            Actions\CreateAction::make(),
         ];
     }
 }
