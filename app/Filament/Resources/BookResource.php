@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\StatusBookEnum;
 use App\Filament\Resources\BookResource\Pages;
 use App\Filament\Resources\BookResource\RelationManagers;
+use App\Filament\Resources\BookResource\RelationManagers\CategoriesRelationManager;
 use App\Models\Book;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -110,7 +111,7 @@ class BookResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CategoriesRelationManager::class,
         ];
     }
 
