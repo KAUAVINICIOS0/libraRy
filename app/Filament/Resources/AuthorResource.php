@@ -8,6 +8,7 @@ use App\Models\Author;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -35,7 +36,7 @@ class AuthorResource extends Resource
                     ->displayFormat('d/m/Y')
                     ->string(),
 
-                RichEditor::make('biography')
+                Textarea::make('biography')
                 ->columnSpanFull(),
             ]);
     }
