@@ -19,35 +19,40 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use function Filament\Support\get_model_label;
 
 class AuthorResource extends Resource
 {
     protected static ?string $model = Author::class;
-
+    public static ?string $modelLabel = __('Author');
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make('Authors')
+                Section::make(__('Authors'))
                     ->columns(2)
-                    ->description('Content for authors')
+                    ->description(__('Content for authors'))
                     ->schema([
                         TextInput::make('name')
-                            ->label('Name of Author')
+                            ->prefixIcon('heroicon-o-user')
+                            ->label(__('Name of Author'))
                             ->placeholder('Kaua Vinicios')
-                            ->hint('Name')
+                            ->hint(__('Name'))
                             ->required(),
         
                         DatePicker::make('date_birth')
                             ->required()
+                            ->prefixIcon('heroicon-o-calendar')
                             ->displayFormat('d/m/Y')
-                            ->hint('Date of birth'),
+                            ->label(__('Date of birth'))
+                            ->hint(__('Date of birth')),
         
                         Textarea::make('biography')
                         ->required()
-                        ->hint('Biography of author')
+                        ->label(__('Biography'))
+                        ->hint(__('Biography of author'))
                         ->placeholder('...')
                         ->columnSpanFull(),
                     ])
@@ -60,9 +65,12 @@ class AuthorResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->sortable()
+                    ->label(__('Name'))
                     ->searchable(),
-                TextColumn::make('date_birth'),
+                TextColumn::make('date_birth')
+                    ->label(__('Date of birth')),
                 TextColumn::make('biography')
+                    ->label(__('Biography'))
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->limit(10),
 

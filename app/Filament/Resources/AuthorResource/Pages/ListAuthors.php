@@ -13,7 +13,10 @@ class ListAuthors extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label(__('Create Author'))
+                ->outlined()
+                ->icon('heroicon-o-user-plus'),
         ];
     }
 }
