@@ -80,13 +80,14 @@ class BookResource extends Resource
                             ->native(false)
                             ->options(StatusBookEnum::class),  
                         
-                        // Select::make('category')
-                        //     ->relationship('categories', 'name')
-                        //     ->multiple()
-                        //     ->label(__('Category'))
-                        //     ->hint(__('Category of book'))
-                        //     ->prefixIcon('heroicon-o-tag')
-                        //     ->preload(true)
+                        Select::make('category')
+                            ->relationship('categories', 'name')
+                            ->multiple()
+                            ->visibleOn('create')
+                            ->label(__('Category'))
+                            ->hint(__('Category of book'))
+                            ->prefixIcon('heroicon-o-tag')
+                            ->preload(true)
                     ])
             ]);
     }
