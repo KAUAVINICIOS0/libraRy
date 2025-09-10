@@ -3,23 +3,23 @@
 namespace App\Filament\Resources;
 
 use App\Enums\StatusBookEnum;
+use App\Filament\Resources\BookResource\RelationManagers\CategoriesRelationManager;
 use App\Filament\Resources\BookResource\Pages;
 use App\Filament\Resources\BookResource\RelationManagers;
-use App\Filament\Resources\BookResource\RelationManagers\CategoriesRelationManager;
 use App\Models\Book;
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Factories\Relationship;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BookResource extends Resource
@@ -41,21 +41,18 @@ class BookResource extends Resource
                             ->label(__('Title'))
                             ->placeholder('Harry Potter')
                             ->hint(__('This is Title of book')),
-        
                         TextInput::make('isbn')
                             ->required()
                             ->prefixIcon('heroicon-o-document')
                             ->label('ISBN')
                             ->hint(__('International Standard Book Number'))
                             ->placeholder('978-0-306-40615-7'),
-        
                         DatePicker::make('year_published')
                             ->required()
                             ->prefixIcon('heroicon-o-calendar-days')
                             ->label(__('Year of published'))
                             ->native(false)
                             ->hint(__('Select Year of published')),
-        
                         Select::make('author_id')
                             ->required()
                             ->label(__('Author'))
@@ -63,7 +60,6 @@ class BookResource extends Resource
                             ->prefixIcon('heroicon-o-academic-cap')
                             ->relationship('author', 'name')
                             ->native(false),
-        
                         Select::make('publisher_id')
                             ->required()
                             ->prefixIcon('heroicon-o-home-modern')
@@ -71,15 +67,6 @@ class BookResource extends Resource
                             ->label(__('Publisher'))
                             ->relationship('publisher', 'name')
                             ->native(false),
-        
-                        Select::make('status_book')
-                            ->required()
-                            ->prefixIcon('heroicon-o-chart-bar')
-                            ->hint(__('Select status of book'))
-                            ->label(__('Status of book'))
-                            ->native(false)
-                            ->options(StatusBookEnum::class),  
-                        
                         Select::make('category')
                             ->relationship('categories', 'name')
                             ->multiple()
@@ -103,22 +90,17 @@ class BookResource extends Resource
                 TextColumn::make('isbn')
                     ->searchable()
                     ->label(__('ISBN')),
-                TextColumn::make('status_book')
-                    ->formatStateUsing(fn($state) :? string => __($state))
-                    ->label(__('Status of book'))
-                    ->badge(),
                 TextColumn::make('year_published')
                     ->label(__('Year of published'))
-                    ->toggleable(isToggledHiddenByDefault:true),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('author.name')
                     ->label(__('Name of author'))
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault:true),
-
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('publisher.name')
                     ->searchable()
                     ->label(__('Name of publisher'))
-                    ->toggleable(isToggledHiddenByDefault:true),
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -154,6 +136,7 @@ class BookResource extends Resource
             'edit' => Pages\EditBook::route('/{record}/edit'),
         ];
     }
+
     public static function getModelLabel(): string
     {
         return __('Book');
