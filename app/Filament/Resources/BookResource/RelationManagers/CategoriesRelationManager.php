@@ -24,6 +24,9 @@ class CategoriesRelationManager extends RelationManager
         return $form
             ->schema([
                 Select::make('name')
+                    ->preload(true)
+                    ->label(__('Category Name'))
+                    ->prefixIcon('heroicon-o-tag')
                     ->options(Category::all()->pluck('name', 'id'))
                     ->required(),
             ]);
@@ -35,7 +38,9 @@ class CategoriesRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Categories'),
+                    ->searchable()
+                    ->sortable()
+                    ->label(__('Categories')),
             ])
             ->filters([
                 //
@@ -59,4 +64,9 @@ class CategoriesRelationManager extends RelationManager
     {
         return __('Category of Book');
     }
+    public static function getModelLabel(): string
+    {
+        return __('Categories');
+    }
+
 }
