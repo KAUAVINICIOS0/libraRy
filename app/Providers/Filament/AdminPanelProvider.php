@@ -6,10 +6,13 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
+use Filament\Pages\Auth\Register;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -30,6 +33,15 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->brandName('libraRy')
             ->login()
+            ->registration(\App\Filament\Pages\Auth\Register::class)
+            ->simplePageMaxContentWidth(MaxWidth::TwoExtraLarge)
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label(fn() => __('Human Resources'))
+                    ->icon('heroicon-o-users')
+                    ->collapsible()
+                    ->collapsed(),
+            ])
             ->colors([
                 'primary' => Color::Indigo,
             ])
