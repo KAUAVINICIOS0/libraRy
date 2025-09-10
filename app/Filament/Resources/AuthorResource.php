@@ -67,6 +67,7 @@ class AuthorResource extends Resource
                     ->label(__('Name'))
                     ->searchable(),
                 TextColumn::make('date_birth')
+                    ->dateTime('d/m/Y')
                     ->label(__('Date of birth')),
                 TextColumn::make('biography')
                     ->label(__('Biography'))
