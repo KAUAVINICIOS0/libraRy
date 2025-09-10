@@ -13,8 +13,12 @@ class EditUser extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\ViewAction::make()
+                ->icon('heroicon-s-eye')
+                ->outlined(),
+            Actions\DeleteAction::make()
+                ->icon('heroicon-s-exclamation-triangle')
+                ->outlined(),
         ];
     }
 }
