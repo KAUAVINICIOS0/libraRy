@@ -24,7 +24,6 @@ use function Filament\Support\get_model_label;
 class AuthorResource extends Resource
 {
     protected static ?string $model = Author::class;
-    public static ?string $modelLabel = __('Author');
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     public static function form(Form $form): Form
@@ -107,5 +106,14 @@ class AuthorResource extends Resource
             'view' => Pages\ViewAuthor::route('/{record}'),
             'edit' => Pages\EditAuthor::route('/{record}/edit'),
         ];
+    }
+    public static function getModelLabel(): string
+    {
+        return __('Author');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Authors');
     }
 }
