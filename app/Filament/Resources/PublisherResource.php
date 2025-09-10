@@ -28,29 +28,36 @@ class PublisherResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Create Publishers')
-                    ->description('This Section for create new Publishers')
+                Section::make()
                     ->columns(2)
                     ->schema([
                         TextInput::make('name')
-                            ->label('Name')
+                            ->label(__('Name of publisher'))
                             ->placeholder('Saraiva')
-                            ->hint('Name of Publisher'),
+                            ->required()
+                            ->prefixIcon("heroicon-o-home-modern")
+                            ->hint(__('Publisher')),
         
                         TextInput::make('email')
                             ->label('Email')
+                            ->prefixIcon('heroicon-o-at-symbol')
+                            ->required()
                             ->placeholder('exemple@exemple.com')
-                            ->hint('Email of Publisher'),
+                            ->hint(__('Email of Publisher')),
         
                         TextInput::make('phone')
-                            ->label('Phone Number')
+                            ->label(__('Contact'))
+                            ->prefixIcon('heroicon-o-device-phone-mobile')
+                            ->required()
                             ->placeholder('(13) 91181-0519')
-                            ->hint('Phone Number of Publisher'),
+                            ->hint(__('Phone Number of Publisher')),
         
                         TextInput::make('cnpj')
+                            ->prefixIcon('heroicon-o-paper-clip')
                             ->label('CPNJ')
+                            ->required()
                             ->placeholder('16.054.842/0001-66')
-                            ->hint('Document of Publisher'),
+                            ->hint(__('Document of Publisher')),
                     ])
 
             ]);
@@ -99,5 +106,14 @@ class PublisherResource extends Resource
             'view' => Pages\ViewPublisher::route('/{record}'),
             'edit' => Pages\EditPublisher::route('/{record}/edit'),
         ];
+    }
+    public static function getModelLabel(): string
+    {
+        return __('Publisher');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Publishers');
     }
 }
