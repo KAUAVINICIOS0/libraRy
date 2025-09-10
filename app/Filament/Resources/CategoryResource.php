@@ -13,6 +13,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,15 +30,19 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Category')
-                    ->description('Content for create a new Category')
+                Section::make()
                     ->schema([
                         TextInput::make('name')
-                            ->label('Category')
+                            ->prefixIcon('heroicon-o-tag')
+                            ->label(__('Category Name'))
                             ->placeholder('Terror')
-                            ->hint('Category Name'),
+                            ->required()
+                            ->hint(__('Category Name')),
 
                         Textarea::make('description')
+                            ->required()
+                            ->label(__('Description of category'))
+                            ->hint(__('Description'))
                             ->placeholder('...')
                             ->columnSpanFull(),
                     ])
@@ -47,22 +53,31 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
-                    ->sortable()
-                    ->searchable(),
-
-                TextColumn::make('description')
-                    ->limit(10),
+                Split::make([
+                    Stack::make([
+                        TextColumn::make('name')
+                            ->sortable()
+                            ->searchable(),
+                    ])
+                ])
+            ])->contentGrid([
+                'default' => 3,
+                'sm' => 1,
+                'md' => 2,
+                'lg' => 3,
+                'xl' => 4,
             ])
             ->filters([
                 //
             ])
             ->actions([
-                ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
-                ])
+                    Tables\Actions\ViewAction::make()
+                        ->iconButton(),
+                    Tables\Actions\EditAction::make()
+                        ->iconButton(),
+                    Tables\Actions\DeleteAction::make()
+                        ->iconButton(),
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -86,5 +101,15 @@ class CategoryResource extends Resource
             'view' => Pages\ViewCategory::route('/{record}'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('Category');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Categories');
     }
 }

@@ -30,9 +30,8 @@ class AuthorResource extends Resource
     {
         return $form
             ->schema([
-                Section::make(__('Authors'))
+                Section::make()
                     ->columns(2)
-                    ->description(__('Content for authors'))
                     ->schema([
                         TextInput::make('name')
                             ->prefixIcon('heroicon-o-user')
