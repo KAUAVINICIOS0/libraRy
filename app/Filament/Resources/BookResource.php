@@ -103,6 +103,7 @@ class BookResource extends Resource
                     ->searchable()
                     ->label(__('ISBN')),
                 TextColumn::make('status_book')
+                    ->formatStateUsing(fn($state) :? string => __($state))
                     ->label(__('Status of book'))
                     ->badge(),
                 TextColumn::make('year_published')
