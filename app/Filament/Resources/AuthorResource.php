@@ -42,6 +42,7 @@ class AuthorResource extends Resource
         
                         DatePicker::make('date_birth')
                             ->required()
+                            ->native(false)
                             ->prefixIcon('heroicon-o-calendar')
                             ->displayFormat('d/m/Y')
                             ->label(__('Date of birth'))

@@ -32,47 +32,61 @@ class BookResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Books')
-                    ->description('Content of books')
+                Section::make()
                     ->columns(2)
                     ->schema([
                         TextInput::make('title')
+                            ->prefixIcon('heroicon-o-book-open')
                             ->required()
-                            ->label('Title')
+                            ->label(__('Title'))
                             ->placeholder('Harry Potter')
-                            ->hint('This is Title of book'),
+                            ->hint(__('This is Title of book')),
         
                         TextInput::make('isbn')
                             ->required()
+                            ->prefixIcon('heroicon-o-document')
                             ->label('ISBN')
-                            ->hint('International Standard Book Number')
+                            ->hint(__('International Standard Book Number'))
                             ->placeholder('978-0-306-40615-7'),
         
                         DatePicker::make('year_published')
                             ->required()
-                            ->label('Year of published')
-                            ->hint('Select Year of published'),
+                            ->prefixIcon('heroicon-o-calendar-days')
+                            ->label(__('Year of published'))
+                            ->native(false)
+                            ->hint(__('Select Year of published')),
         
                         Select::make('author_id')
                             ->required()
-                            ->label('Author')
-                            ->hint('Select Author')
+                            ->label(__('Author'))
+                            ->hint(__('Select Author'))
+                            ->prefixIcon('heroicon-o-academic-cap')
                             ->relationship('author', 'name')
                             ->native(false),
         
                         Select::make('publisher_id')
                             ->required()
-                            ->hint('Select published')
-                            ->label('Publisher')
+                            ->prefixIcon('heroicon-o-home-modern')
+                            ->hint(__('Select published'))
+                            ->label(__('Publisher'))
                             ->relationship('publisher', 'name')
                             ->native(false),
         
                         Select::make('status_book')
                             ->required()
-                            ->hint('Select status of book')
-                            ->label('Status of book')
+                            ->prefixIcon('heroicon-o-chart-bar')
+                            ->hint(__('Select status of book'))
+                            ->label(__('Status of book'))
                             ->native(false)
-                            ->options(StatusBookEnum::class),        
+                            ->options(StatusBookEnum::class),  
+                        
+                        // Select::make('category')
+                        //     ->relationship('categories', 'name')
+                        //     ->multiple()
+                        //     ->label(__('Category'))
+                        //     ->hint(__('Category of book'))
+                        //     ->prefixIcon('heroicon-o-tag')
+                        //     ->preload(true)
                     ])
             ]);
     }
@@ -82,13 +96,27 @@ class BookResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Title'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('isbn'),
-                TextColumn::make('status_book'),
-                TextColumn::make('year_published'),
-                TextColumn::make('author.name'),
-                TextColumn::make('publisher.name'),
+                TextColumn::make('isbn')
+                    ->searchable()
+                    ->label(__('ISBN')),
+                TextColumn::make('status_book')
+                    ->label(__('Status of book'))
+                    ->badge(),
+                TextColumn::make('year_published')
+                    ->label(__('Year of published'))
+                    ->toggleable(isToggledHiddenByDefault:true),
+                TextColumn::make('author.name')
+                    ->label(__('Name of author'))
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault:true),
+
+                TextColumn::make('publisher.name')
+                    ->searchable()
+                    ->label(__('Name of publisher'))
+                    ->toggleable(isToggledHiddenByDefault:true),
             ])
             ->filters([
                 //
@@ -123,5 +151,14 @@ class BookResource extends Resource
             'view' => Pages\ViewBook::route('/{record}'),
             'edit' => Pages\EditBook::route('/{record}/edit'),
         ];
+    }
+    public static function getModelLabel(): string
+    {
+        return __('Book');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Books');
     }
 }
