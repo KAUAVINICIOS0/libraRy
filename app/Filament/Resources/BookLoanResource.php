@@ -6,7 +6,10 @@ use App\Filament\Resources\BookLoanResource\Pages;
 use App\Filament\Resources\BookLoanResource\RelationManagers;
 use App\Models\BookLoan;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Forms;
 use Filament\Tables;
@@ -46,21 +49,23 @@ class BookLoanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('book_id')
+                Tables\Columns\TextColumn::make('book.title')
                     ->toggleable()
                     ->label('Livro')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_by')
+                Tables\Columns\TextColumn::make('createdBy.name')
                     ->label('Criado por')
                     ->toggleable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('customer_id')
+                Tables\Columns\TextColumn::make('customer.name')
                     ->label('Cliente')
                     ->toggleable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\TextColumn::make('book.status')
                     ->toggleable()
                     ->searchable(),
+                TextColumn::make('status_transfer')
+                    ->label('Status da Transferência'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->translateLabel()
                     ->dateTime()
@@ -76,8 +81,22 @@ class BookLoanResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\Action::make('finish')
+                        ->label('Finalizar Empréstimo')
+                        ->color('success')
+                        ->icon('heroicon-o-check-circle')
+                        ->requiresConfirmation()
+                        ->action(function (BookLoan $record) {
+                            $record->update(['status_transfer' => 'finished']);
+                            Notification::make()
+                                ->title('Empréstimo finalizado com sucesso!🌽')
+                                ->success()
+                                ->send();
+                        })
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

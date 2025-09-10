@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusBookLoanEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,8 @@ return new class extends Migration {
             $table->foreignUlid('book_id')->constrained('books')->cascadeOnDelete();
             $table->foreignUlid('created_by')->constrained('users')->cascadeOnDelete();
             $table->foreignUlid('customer_id')->constrained('customers')->cascadeOnDelete();
-            $table->string('status');
+            $table->string('status_transfer')->default(StatusBookLoanEnum::IN_PROGRESS->value);
+
             $table->timestamps();
         });
     }

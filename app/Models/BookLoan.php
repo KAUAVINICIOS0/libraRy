@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\StatusBookEnum;
+use App\Enums\StatusBookLoanEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,11 +18,11 @@ class BookLoan extends Model
         'book_id',
         'created_by',
         'customer_id',
-        'status',
+        'status_transfer',
     ];
 
     protected $casts = [
-        'status' => StatusBookEnum::class
+        'status_transfer' => StatusBookLoanEnum::class,
     ];
 
     public function book()
